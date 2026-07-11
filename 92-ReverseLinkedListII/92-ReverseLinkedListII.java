@@ -1,14 +1,22 @@
-// Last updated: 7/11/2026, 4:21:14 PM
+// Last updated: 7/11/2026, 4:22:10 PM
 1class Solution {
-2    public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+2    public int maxProduct(int[] nums) {
 3        
-4        int areaOf1stRectangle = (ax2 - ax1) * (ay2 - ay1);
-5        int areaOf2ndRectangle = (bx2 - bx1) * (by2 - by1);
-6
-7        int xOverlap = Math.min(ax2, bx2) - Math.max(ax1, bx1);
-8        int yOverlap = Math.min(ay2, by2) - Math.max(ay1, by1);
-9        int areaOverlap = (xOverlap > 0 && yOverlap > 0) ? xOverlap * yOverlap : 0;
-10
-11        return (areaOf1stRectangle + areaOf2ndRectangle - areaOverlap); 
-12    }
-13}
+4        int max = nums[0], min = nums[0], ans = nums[0];
+5        
+6        for (int i = 1; i < nums.length; i++) {
+7            
+8            int temp = max;  // store the max because before updating min your max will already be updated
+9            
+10            max = Math.max(Math.max(max * nums[i], min * nums[i]), nums[i]);
+11            min = Math.min(Math.min(temp * nums[i], min * nums[i]), nums[i]);
+12            
+13            if (max > ans) {
+14                ans = max;
+15            }
+16        }
+17        
+18        return ans;
+19
+20    }
+21}
