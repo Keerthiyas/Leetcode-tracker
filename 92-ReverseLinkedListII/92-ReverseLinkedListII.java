@@ -1,22 +1,19 @@
-// Last updated: 7/11/2026, 4:22:10 PM
+// Last updated: 7/11/2026, 4:23:48 PM
 1class Solution {
-2    public int maxProduct(int[] nums) {
-3        
-4        int max = nums[0], min = nums[0], ans = nums[0];
-5        
-6        for (int i = 1; i < nums.length; i++) {
-7            
-8            int temp = max;  // store the max because before updating min your max will already be updated
-9            
-10            max = Math.max(Math.max(max * nums[i], min * nums[i]), nums[i]);
-11            min = Math.min(Math.min(temp * nums[i], min * nums[i]), nums[i]);
-12            
-13            if (max > ans) {
-14                ans = max;
-15            }
-16        }
-17        
-18        return ans;
-19
-20    }
-21}
+2    public int countDigitOccurrences(int[] nums, int digit) {
+3        int count = 0;
+4        for( int num : nums ){
+5            if( num == 0 && digit == 0){
+6                count++;
+7            }
+8
+9            while(num > 0){
+10                if(num % 10 == digit){
+11                    count++;
+12                }
+13                num = num / 10;
+14            }
+15        }
+16        return count;
+17    }
+18}
