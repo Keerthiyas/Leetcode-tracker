@@ -1,21 +1,14 @@
-// Last updated: 7/11/2026, 4:17:05 PM
+// Last updated: 7/11/2026, 4:21:14 PM
 1class Solution {
-2    public ListNode reverseBetween(ListNode head, int left, int right) {
-3        ListNode dummy = new ListNode(0); // created dummy node
-4        dummy.next = head;
-5        ListNode prev = dummy; // intialising prev pointer on dummy node
-6        
-7        for(int i = 0; i < left - 1; i++)
-8            prev = prev.next; // adjusting the prev pointer on it's actual index
-9        
-10        ListNode curr = prev.next; // curr pointer will be just after prev
-11        // reversing
-12        for(int i = 0; i < right - left; i++){
-13            ListNode forw = curr.next; // forw pointer will be after curr
-14            curr.next = forw.next;
-15            forw.next = prev.next;
-16            prev.next = forw;
-17        }
-18        return dummy.next;
-19    }
-20}
+2    public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+3        
+4        int areaOf1stRectangle = (ax2 - ax1) * (ay2 - ay1);
+5        int areaOf2ndRectangle = (bx2 - bx1) * (by2 - by1);
+6
+7        int xOverlap = Math.min(ax2, bx2) - Math.max(ax1, bx1);
+8        int yOverlap = Math.min(ay2, by2) - Math.max(ay1, by1);
+9        int areaOverlap = (xOverlap > 0 && yOverlap > 0) ? xOverlap * yOverlap : 0;
+10
+11        return (areaOf1stRectangle + areaOf2ndRectangle - areaOverlap); 
+12    }
+13}
