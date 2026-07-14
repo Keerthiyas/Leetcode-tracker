@@ -1,20 +1,21 @@
-// Last updated: 7/14/2026, 8:49:32 AM
+// Last updated: 7/14/2026, 9:35:03 AM
 1class Solution {
-2    public int maxArea(int[] height) {
-3        int maxArea = 0;
-4        int left = 0;
-5        int right = height.length - 1;
-6
-7        while (left < right) {
-8            maxArea = Math.max(maxArea, (right - left) * Math.min(height[left], height[right]));
-9
-10            if (height[left] < height[right]) {
-11                left++;
-12            } else {
-13                right--;
+2    public int[][] merge(int[][] intervals) {
+3        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+4
+5        List<int[]> merged = new ArrayList<>();
+6        int[] prev = intervals[0];
+7
+8        for (int i = 1; i < intervals.length; i++) {
+9            if (intervals[i][0] <= prev[1]) {
+10                prev[1] = Math.max(prev[1], intervals[i][1]);
+11            } else {
+12                merged.add(prev);
+13                prev = intervals[i];
 14            }
 15        }
 16
-17        return maxArea;        
-18    }
-19}
+17        merged.add(prev); 
+18        return merged.toArray(new int[merged.size()][]);
+19    }
+20}
