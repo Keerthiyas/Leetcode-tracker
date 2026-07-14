@@ -1,18 +1,20 @@
-// Last updated: 7/14/2026, 8:48:32 AM
+// Last updated: 7/14/2026, 8:49:32 AM
 1class Solution {
-2    public int removeDuplicates(int[] nums) {
-3        int n = nums.length;
-4        if(n<=2){
-5            return n;
-6        }
-7
-8        int j = 2;
-9        for(int i=2; i<n; i++){
-10            if(nums[i] != nums[j-2]){
-11                nums[j] = nums[i];
-12                j++;
-13            }
-14        }
-15        return j;
-16    }
-17}
+2    public int maxArea(int[] height) {
+3        int maxArea = 0;
+4        int left = 0;
+5        int right = height.length - 1;
+6
+7        while (left < right) {
+8            maxArea = Math.max(maxArea, (right - left) * Math.min(height[left], height[right]));
+9
+10            if (height[left] < height[right]) {
+11                left++;
+12            } else {
+13                right--;
+14            }
+15        }
+16
+17        return maxArea;        
+18    }
+19}
