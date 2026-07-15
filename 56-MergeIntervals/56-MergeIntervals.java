@@ -1,16 +1,16 @@
-// Last updated: 7/15/2026, 9:33:13 PM
+// Last updated: 7/15/2026, 9:35:18 PM
 1class Solution {
-2    public boolean canConstruct(String ransomNote, String magazine) {
-3		if (ransomNote.length() > magazine.length()) return false;
-4        int[] alphabets_counter = new int[26];
-5        
-6        for (char c : magazine.toCharArray())
-7            alphabets_counter[c-'a']++;
-8
-9        for (char c : ransomNote.toCharArray()){
-10            if (alphabets_counter[c-'a'] == 0) return false;
-11            alphabets_counter[c-'a']--;
-12        }
-13        return true;
+2    public String reverseWords(String s) {
+3        // Split the input string into words and reverse each word
+4        String[] words = s.split(" ");
+5        StringBuilder result = new StringBuilder();
+6        for (String word : words) {
+7            StringBuilder reversedWord = new StringBuilder(word).reverse();
+8            result.append(reversedWord).append(" ");
+9        }
+10        result.deleteCharAt(result.length() - 1);  // Remove the extra space at the end
+11        
+12        // Convert StringBuilder to String
+13        return result.toString();        
 14    }
 15}
