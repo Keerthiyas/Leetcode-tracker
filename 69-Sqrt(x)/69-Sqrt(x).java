@@ -1,34 +1,52 @@
-// Last updated: 7/19/2026, 7:43:08 AM
+// Last updated: 7/19/2026, 7:43:55 AM
 1class Solution {
-2  static boolean search(int[]arr, int target) {
-3        int start = 0;
-4        int end = arr.length - 1;
-5        while (start <= end) {
+2    public int lower(int[] nums, int n, int target) {
+3        int high = n - 1;
+4        int ans = n;
+5        int low = 0;
 6
-7            int mid = start + (end - start) / 2;
-8            if (arr[mid] == target) {
-9                return true;
-10            }
-11
-12              //  To handle duplicates
-13
-14            if(arr[mid] == arr[start] && arr[mid] == arr[end]){
-15                start ++;
-16                end --;
-17                continue;
-18            }
-19            if(arr[mid] >= arr[start]){
-20                if(arr[mid] > target && arr[start] <= target){
-21                    end = mid-1;
-22                }else start = mid+1;
-23            } else{
-24                if(arr[mid] < target && arr[end] >= target){
-25                    start = mid+1;
-26                }else end = mid-1;
-27            }
-28        }
-29        return false;
-30        }
-31    }
-32
-33 
+7        while (low <= high) {
+8            int mid = (low + high) / 2;
+9
+10            if (nums[mid] >= target) {
+11                ans = mid;
+12                high = mid - 1;
+13            } else {
+14                low = mid + 1;
+15            }
+16        }
+17
+18        return ans;
+19    }
+20
+21    public int higher(int[] nums, int n, int target) {
+22        int low = 0;
+23        int high = n - 1;
+24        int ans = n;
+25
+26        while (low <= high) {
+27            int mid = (low + high) / 2;
+28
+29            if (nums[mid] > target) {
+30                ans = mid;
+31                high = mid - 1;
+32            } else {
+33                low = mid + 1;
+34            }
+35        }
+36
+37        return ans;
+38    }
+39
+40    public int[] searchRange(int[] nums, int target) {
+41        int n = nums.length;
+42
+43        int lowee = lower(nums, n, target);
+44
+45        if (lowee == n || nums[lowee] != target) {
+46            return new int[] {-1, -1};
+47        }
+48
+49        return new int[] {lowee, higher(nums, n, target) - 1};
+50    }
+51}
