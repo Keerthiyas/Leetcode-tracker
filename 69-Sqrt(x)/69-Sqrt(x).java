@@ -1,24 +1,28 @@
-// Last updated: 7/19/2026, 7:44:28 AM
-1class Solution {
-2    public boolean searchMatrix(int[][] matrix, int target) {
-3        int rows = matrix.length;
-4        int cols = matrix[0].length;
-5
-6        int i = 0;
-7        int j = cols - 1;
-8
-9        while (i < rows && j >= 0) {
-10            if (matrix[i][j] == target) {
-11                return true;
-12            }
-13
-14            if (matrix[i][j] < target) {
-15                i++;
-16            } else {
-17                j--;
-18            }
-19        }
-20
-21        return false;
-22    }
-23}
+// Last updated: 7/19/2026, 7:45:35 AM
+1public class Solution {
+2    public int minEatingSpeed(int[] piles, int h) {
+3        int left = 1;  
+4        int right = Arrays.stream(piles).max().getAsInt();
+5        int ans = right;
+6
+7        while (left <= right) {
+8            int mid = left + (right - left) / 2;
+9            if (canFinish(piles, h, mid)) {
+10                ans = mid;     
+11                right = mid - 1;
+12            } else {
+13                left = mid + 1; 
+14            }
+15        }
+16        return ans;
+17    }
+18
+19    public boolean canFinish(int[] piles, int h, int k) {
+20        long hours = 0;
+21        for (int pile : piles) {
+22            hours += pile / k;
+23            if (pile % k != 0) hours++;
+24        }
+25        return hours <= h;
+26    }
+27}
