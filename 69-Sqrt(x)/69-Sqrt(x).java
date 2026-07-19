@@ -1,23 +1,34 @@
-// Last updated: 7/19/2026, 7:42:15 AM
+// Last updated: 7/19/2026, 7:43:08 AM
 1class Solution {
-2    public int mySqrt(int x) {
-3        if (x < 2) return x;
-4
-5        int left = 1, right = x / 2;
+2  static boolean search(int[]arr, int target) {
+3        int start = 0;
+4        int end = arr.length - 1;
+5        while (start <= end) {
 6
-7        while (left <= right) {
-8            int mid = left + (right - left) / 2;
-9            long square = (long) mid * mid;
-10
-11            if (square == x) {
-12                return mid;
-13            } else if (square < x) {
-14                left = mid + 1;
-15            } else {
-16                right = mid - 1;
-17            }
-18        }
-19
-20        return right;        
-21    }
-22}
+7            int mid = start + (end - start) / 2;
+8            if (arr[mid] == target) {
+9                return true;
+10            }
+11
+12              //  To handle duplicates
+13
+14            if(arr[mid] == arr[start] && arr[mid] == arr[end]){
+15                start ++;
+16                end --;
+17                continue;
+18            }
+19            if(arr[mid] >= arr[start]){
+20                if(arr[mid] > target && arr[start] <= target){
+21                    end = mid-1;
+22                }else start = mid+1;
+23            } else{
+24                if(arr[mid] < target && arr[end] >= target){
+25                    start = mid+1;
+26                }else end = mid-1;
+27            }
+28        }
+29        return false;
+30        }
+31    }
+32
+33 
