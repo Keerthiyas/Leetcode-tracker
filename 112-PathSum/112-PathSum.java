@@ -1,53 +1,21 @@
-// Last updated: 7/23/2026, 9:05:47 AM
+// Last updated: 7/23/2026, 9:06:31 AM
 1class Solution {
-2    public int myAtoi(String s) {
-3        if (s == null || s.length() == 0) {
-4            return 0;
-5        }
-6        
-7        // Constants for 32-bit signed integer range
-8        final int INT_MAX = Integer.MAX_VALUE;
-9        final int INT_MIN = Integer.MIN_VALUE;
-10        
-11        int i = 0;
-12        int n = s.length();
-13        
-14        // Step 1: Skip leading whitespace
-15        while (i < n && s.charAt(i) == ' ') {
-16            i++;
+2    public String countAndSay(int n) {
+3        String res = "1";
+4        for (int i = 1; i < n; i++) {
+5            StringBuilder temp = new StringBuilder();
+6            int count = 1;
+7            for (int j = 1; j < res.length(); j++) {
+8                if (res.charAt(j) == res.charAt(j - 1)) {
+9                    count++;
+10                } else {
+11                    temp.append(count).append(res.charAt(j - 1));
+12                    count = 1;
+13                }
+14            }
+15            temp.append(count).append(res.charAt(res.length() - 1));
+16            res = temp.toString();
 17        }
-18        
-19        // Check if we've reached the end
-20        if (i == n) {
-21            return 0;
-22        }
-23        
-24        // Step 2: Check for sign
-25        int sign = 1;
-26        if (s.charAt(i) == '+') {
-27            i++;
-28        } else if (s.charAt(i) == '-') {
-29            sign = -1;
-30            i++;
-31        }
-32        
-33        // Step 3: Read digits and convert
-34        long res = 0;
-35        while (i < n && Character.isDigit(s.charAt(i))) {
-36            int digit = s.charAt(i) - '0';
-37            res = res * 10 + digit;
-38            
-39            if (sign * res <= INT_MIN) {
-40                return INT_MIN;
-41            }
-42            if (sign * res >= INT_MAX) {
-43                return INT_MAX;
-44            }
-45            
-46            i++;
-47        }
-48        
-49        // Step 4: Apply sign and return
-50        return (int)(res * sign);        
-51    }
-52}
+18        return res;
+19    }
+20}
