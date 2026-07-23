@@ -1,33 +1,53 @@
-// Last updated: 7/23/2026, 9:04:49 AM
+// Last updated: 7/23/2026, 9:05:47 AM
 1class Solution {
-2    public List<List<Integer>> threeSum(int[] nums) {
-3        List<List<Integer>> result = new ArrayList<>();
-4        Arrays.sort(nums);
-5
-6        for (int i = 0; i < nums.length - 2; i++) {
-7            if (i > 0 && nums[i] == nums[i-1]) continue; // skip duplicate i
-8
-9            int left = i + 1;
-10            int right = nums.length - 1;
-11            int sum = nums[i] * -1;
-12
-13            while (left < right) {
-14                int s = nums[left] + nums[right];
-15
-16                if (sum == s) {
-17                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
-18                    left++;
-19                    right--;
-20
-21                    while (left < right && nums[left] == nums[left-1]) left++;
-22                    while (left < right && nums[right] == nums[right+1]) right--;
-23                } else if (s < sum) {
-24                    left++;
-25                } else {
-26                    right--;
-27                }
-28            }
-29        }
-30        return result;
-31    }
-32}
+2    public int myAtoi(String s) {
+3        if (s == null || s.length() == 0) {
+4            return 0;
+5        }
+6        
+7        // Constants for 32-bit signed integer range
+8        final int INT_MAX = Integer.MAX_VALUE;
+9        final int INT_MIN = Integer.MIN_VALUE;
+10        
+11        int i = 0;
+12        int n = s.length();
+13        
+14        // Step 1: Skip leading whitespace
+15        while (i < n && s.charAt(i) == ' ') {
+16            i++;
+17        }
+18        
+19        // Check if we've reached the end
+20        if (i == n) {
+21            return 0;
+22        }
+23        
+24        // Step 2: Check for sign
+25        int sign = 1;
+26        if (s.charAt(i) == '+') {
+27            i++;
+28        } else if (s.charAt(i) == '-') {
+29            sign = -1;
+30            i++;
+31        }
+32        
+33        // Step 3: Read digits and convert
+34        long res = 0;
+35        while (i < n && Character.isDigit(s.charAt(i))) {
+36            int digit = s.charAt(i) - '0';
+37            res = res * 10 + digit;
+38            
+39            if (sign * res <= INT_MIN) {
+40                return INT_MIN;
+41            }
+42            if (sign * res >= INT_MAX) {
+43                return INT_MAX;
+44            }
+45            
+46            i++;
+47        }
+48        
+49        // Step 4: Apply sign and return
+50        return (int)(res * sign);        
+51    }
+52}
