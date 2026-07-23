@@ -1,21 +1,25 @@
-// Last updated: 7/23/2026, 9:06:31 AM
+// Last updated: 7/23/2026, 9:08:33 AM
 1class Solution {
-2    public String countAndSay(int n) {
-3        String res = "1";
-4        for (int i = 1; i < n; i++) {
-5            StringBuilder temp = new StringBuilder();
-6            int count = 1;
-7            for (int j = 1; j < res.length(); j++) {
-8                if (res.charAt(j) == res.charAt(j - 1)) {
-9                    count++;
-10                } else {
-11                    temp.append(count).append(res.charAt(j - 1));
-12                    count = 1;
-13                }
-14            }
-15            temp.append(count).append(res.charAt(res.length() - 1));
-16            res = temp.toString();
-17        }
-18        return res;
-19    }
-20}
+2    public int longestConsecutive(int[] nums) {
+3        Set<Integer> numSet = new HashSet<>();
+4        for (int num : nums) {
+5            numSet.add(num);
+6        }
+7
+8        int longest = 0;
+9
+10        for (int num : numSet) {
+11            if (!numSet.contains(num - 1)) {
+12                int length = 1;
+13
+14                while (numSet.contains(num + length)) {
+15                    length++;
+16                }
+17
+18                longest = Math.max(longest, length);
+19            }
+20        }
+21
+22        return longest;        
+23    }
+24}
