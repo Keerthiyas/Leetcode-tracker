@@ -1,32 +1,22 @@
-// Last updated: 7/26/2026, 6:50:49 PM
-1class Solution {
-2    public boolean closeStrings(String word1, String word2) {
-3        int m = word1.length(), n = word2.length();
-4        if (m != n)
-5            return false;
-6
-7        Map<Character, Integer> map1 = new HashMap<>();
-8        Map<Character, Integer> map2 = new HashMap<>();
+// Last updated: 7/26/2026, 6:53:49 PM
+1public class Solution {
+2    public int minSteps(String s, String t) {
+3        int[] countS = new int[26];
+4        int[] countT = new int[26];
+5
+6        for (char ch : s.toCharArray()) {
+7            countS[ch - 'a']++;
+8        }
 9
-10        for (char c : word1.toCharArray())
-11            map1.put(c, map1.getOrDefault(c, 0) + 1);
-12
-13        for (char c : word2.toCharArray()) {
-14            if (!map1.containsKey(c))
-15                return false;
-16            map2.put(c, map2.getOrDefault(c, 0) + 1);
+10        for (char ch : t.toCharArray()) {
+11            countT[ch - 'a']++;
+12        }
+13
+14        int steps = 0;
+15        for (int i = 0; i < 26; i++) {
+16            steps += Math.abs(countS[i] - countT[i]);
 17        }
 18
-19        ArrayList<Integer> arr = new ArrayList<>();
-20        for (Integer i : map1.values())
-21            arr.add(i);
-22
-23        for (Integer i : map2.values())
-24            if (arr.contains(i))
-25                arr.remove(i);
-26            else
-27                return false;
-28
-29        return arr.isEmpty();
-30    }
-31}
+19        return steps / 2;  
+20    }
+21}
