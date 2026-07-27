@@ -1,4 +1,4 @@
-// Last updated: 7/12/2026, 9:09:52 PM
+// Last updated: 7/27/2026, 9:09:27 AM
 1class Solution {
 2    public int minCut(String s) {
 3        int n = s.length();
