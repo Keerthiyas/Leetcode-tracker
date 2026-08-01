@@ -1,16 +1,15 @@
-// Last updated: 8/1/2026, 1:03:28 PM
-1class Solution {
-2    public String toHex(int num) {
-3        if (num == 0) return "0";
-4
-5        char[] hexChars = "0123456789abcdef".toCharArray(); 
-6        StringBuilder sb = new StringBuilder();
-7        while (num != 0) {
-8            int rem = num & 15;
-9            sb.append(hexChars[rem]);
-10            num >>>= 4;
+// Last updated: 8/1/2026, 1:10:25 PM
+1
+2class Solution {
+3    public int arrangeCoins(int n) {
+4        long left = 1, right = n;
+5        while (left <= right) {
+6            long mid = left + (right - left) / 2;
+7            long coins_needed = mid * (mid + 1) / 2;
+8            if (coins_needed == n) return (int) mid;
+9            else if (coins_needed < n) left = mid + 1;
+10            else right = mid - 1;
 11        }
-12
-13        return sb.reverse().toString();
-14    }
-15}
+12        return (int) right;
+13    }
+14}
