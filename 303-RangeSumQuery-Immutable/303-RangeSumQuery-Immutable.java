@@ -1,17 +1,17 @@
-// Last updated: 8/1/2026, 12:45:26 PM
-1class NumArray {
-2    private int[] pre;
-3    public NumArray(int[] nums) {
-4        int n = nums.length;
-5        pre = new int[n+1];
-6
-7        pre[0] = 0;
-8        for(int i = 1;i<=n;i++){
-9            pre[i] = pre[i-1] + nums[i-1];
-10        }    
-11    }
-12    
-13    public int sumRange(int left, int right) {
-14        return pre[right+1] - pre[left];
+// Last updated: 8/1/2026, 12:46:40 PM
+1class Solution {
+2    public int[] countBits(int n) {
+3        int[] dp = new int[n + 1];
+4        int sub = 1;
+5
+6        for (int i = 1; i <= n; i++) {
+7            if (sub * 2 == i) {
+8                sub = i;
+9            }
+10
+11            dp[i] = dp[i - sub] + 1;
+12        }
+13
+14        return dp;        
 15    }
 16}
