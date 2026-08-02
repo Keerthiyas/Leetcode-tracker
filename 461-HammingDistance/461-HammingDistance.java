@@ -1,35 +1,26 @@
-// Last updated: 8/2/2026, 12:59:57 PM
-1class Solution {
-2    public int hammingDistance(int x, int y) {
-3        int count = 0;
-4        
-5        
-6        if (x == y)
-7            return count;
-8        
-9        
-10        while (x > 0 || y > 0) {
-11            int xBit = 0;
-12            int yBit = 0;
-13            
-14            
-15            if (x > 0) {
-16                xBit = x % 2;
-17                x = Math.floorDiv(x, 2);
-18            }
-19            
-20            
-21            if (y > 0) {
-22                yBit = y % 2;
-23                y = Math.floorDiv(y, 2);
-24            }
-25            
-26            
-27            if (xBit != yBit)
-28                count++;
-29        }
-30        
-31        
-32        return count;
-33    }
-34}
+// Last updated: 8/2/2026, 1:00:57 PM
+1public class Solution {
+2    public int islandPerimeter(int[][] grid) {
+3        int n = grid.length;
+4        int m = grid[0].length;
+5        int cnt = 0;
+6        for (int i = 0; i < n; i++) {
+7            for (int j = 0; j < m; j++) {
+8                if (grid[i][j] == 1) {
+9                    if ((j > 0 && grid[i][j - 1] == 0) || j == 0)
+10                        cnt++;
+11
+12                    if ((i > 0 && grid[i - 1][j] == 0) || i == 0)
+13                        cnt++;
+14
+15                    if ((j < m - 1 && grid[i][j + 1] == 0) || j == m - 1)
+16                        cnt++;
+17
+18                    if ((i < n - 1 && grid[i + 1][j] == 0) || i == n - 1)
+19                        cnt++;
+20                }
+21            }
+22        }
+23        return cnt;
+24    }
+25}
