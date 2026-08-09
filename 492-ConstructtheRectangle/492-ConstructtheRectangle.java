@@ -1,16 +1,10 @@
-// Last updated: 8/9/2026, 7:58:36 PM
+// Last updated: 8/9/2026, 7:59:19 PM
 1class Solution {
-2    public int findMaxConsecutiveOnes(int[] nums) {
-3        int maxCnt = 0;
-4        int curCnt = 0;
-5        for(int n : nums){
-6            if(n == 1)
-7                curCnt++;
-8            else{
-9                maxCnt = Math.max(maxCnt, curCnt);
-10                curCnt = 0;
-11            }
-12        }
-13        return maxCnt>curCnt ? maxCnt : curCnt;
-14    }
-15}
+2       public String licenseKeyFormatting(String s, int k) {
+3        StringBuilder sb = new StringBuilder();
+4        for (int i = s.length() - 1; i >= 0; i--)
+5            if (s.charAt(i) != '-')
+6                sb.append(sb.length() % (k + 1) == k ? '-' : "").append(s.charAt(i));
+7        return sb.reverse().toString().toUpperCase();
+8    } 
+9}
