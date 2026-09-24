@@ -1,24 +1,19 @@
-// Last updated: 9/24/2026, 7:38:13 PM
-1/**
-2 * Definition for a binary tree node.
-3 * public class TreeNode {
-4 *     int val;
-5 *     TreeNode left;
-6 *     TreeNode right;
-7 *     TreeNode() {}
-8 *     TreeNode(int val) { this.val = val; }
-9 *     TreeNode(int val, TreeNode left, TreeNode right) {
-10 *         this.val = val;
-11 *         this.left = left;
-12 *         this.right = right;
-13 *     }
-14 * }
-15 */
-16class Solution {
-17    public int maxDepth(TreeNode root) {
-18        if (root == null) {
-19            return 0;
-20        }
-21        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));        
-22    }
-23}
+// Last updated: 9/24/2026, 7:43:41 PM
+1class Solution {
+2    int sum = 0;
+3
+4    public int sumNumbers(TreeNode root) {
+5        helper(root, 0);
+6        return sum;
+7    }
+8
+9    void helper(TreeNode node, int path) {
+10        if (node == null) return;
+11        path = path * 10 + node.val;
+12        if (node.left == null && node.right == null) {
+13            sum += path;
+14        }
+15        helper(node.left, path);
+16        helper(node.right, path);
+17    }
+18}
