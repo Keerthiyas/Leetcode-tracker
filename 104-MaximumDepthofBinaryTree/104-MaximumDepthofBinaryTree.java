@@ -1,19 +1,33 @@
-// Last updated: 9/24/2026, 9:01:57 PM
-1public class Solution {
-2
-3    int sum = 0;
-4    
-5    public TreeNode convertBST(TreeNode root) {
-6        convert(root);
-7        return root;
-8    }
-9    
-10    public void convert(TreeNode cur) {
-11        if (cur == null) return;
-12        convert(cur.right);
-13        cur.val += sum;
-14        sum = cur.val;
-15        convert(cur.left);
-16    }
-17    
-18}
+// Last updated: 9/24/2026, 9:02:57 PM
+1class Solution {
+2    public TreeNode buildTree(int[] preorder, int[] inorder) {
+3        Deque<Integer> preorderQueue = new ArrayDeque<>();
+4        for (int val : preorder) {
+5            preorderQueue.offer(val);
+6        }
+7
+8        return build(preorderQueue, inorder);        
+9    }
+10
+11    private TreeNode build(Deque<Integer> preorder, int[] inorder) {
+12        if (inorder.length > 0) {
+13            int idx = indexOf(inorder, preorder.poll());
+14            TreeNode root = new TreeNode(inorder[idx]);
+15
+16            root.left = build(preorder, Arrays.copyOfRange(inorder, 0, idx));
+17            root.right = build(preorder, Arrays.copyOfRange(inorder, idx + 1, inorder.length));
+18
+19            return root;
+20        }
+21        return null;
+22    }
+23
+24    private int indexOf(int[] arr, int value) {
+25        for (int i = 0; i < arr.length; i++) {
+26            if (arr[i] == value) {
+27                return i;
+28            }
+29        }
+30        return -1; // shouldn't happen with valid input
+31    }    
+32}
