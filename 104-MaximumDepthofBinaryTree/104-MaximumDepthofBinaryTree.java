@@ -1,16 +1,18 @@
-// Last updated: 9/24/2026, 9:05:53 PM
+// Last updated: 9/24/2026, 9:06:46 PM
 1class Solution {
-2    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-3        int small = Math.min(p.val, q.val);
-4        int large = Math.max(p.val, q.val);
-5        while (root != null) {
-6            if (root.val > large) // p, q belong to the left subtree
-7                root = root.left;
-8            else if (root.val < small) // p, q belong to the right subtree
-9                root = root.right;
-10            else // Now, small <= root.val <= large -> This root is the LCA between p and q
-11                return root;
-12        }
-13        return null;
-14    }
-15}
+2    public TreeNode sortedListToBST(ListNode head) {
+3        if(head==null) return null;
+4        if(head.next==null) return new TreeNode(head.val);
+5        ListNode slow=head,fast=head,slow_Prev=null;
+6        while(fast!=null && fast.next!=null){
+7            slow_Prev = slow;
+8            slow = slow.next;
+9            fast = fast.next.next;
+10        }
+11        TreeNode root = new TreeNode(slow.val);//Making A Root Node
+12        slow_Prev.next = null;//Braeking The Link For L1
+13        root.left = sortedListToBST(head);
+14        root.right = sortedListToBST(slow.next);
+15        return root;
+16    }
+17}
