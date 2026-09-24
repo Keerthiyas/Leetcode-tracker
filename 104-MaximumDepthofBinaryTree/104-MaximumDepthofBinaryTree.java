@@ -1,19 +1,19 @@
-// Last updated: 9/24/2026, 7:43:41 PM
+// Last updated: 9/24/2026, 7:45:52 PM
 1class Solution {
-2    int sum = 0;
-3
-4    public int sumNumbers(TreeNode root) {
-5        helper(root, 0);
-6        return sum;
-7    }
-8
-9    void helper(TreeNode node, int path) {
-10        if (node == null) return;
-11        path = path * 10 + node.val;
-12        if (node.left == null && node.right == null) {
-13            sum += path;
+2    public int longestSubarray(int[] nums) {
+3        int left = 0, zeros = 0, res = 0;
+4        
+5        for (int right = 0; right < nums.length; right++) {
+6            if (nums[right] == 0) zeros++;
+7            
+8            while (zeros > 1) {
+9                if (nums[left] == 0) zeros--;
+10                left++;
+11            }
+12            
+13            res = Math.max(res, right - left);
 14        }
-15        helper(node.left, path);
-16        helper(node.right, path);
+15        
+16        return res;
 17    }
 18}
