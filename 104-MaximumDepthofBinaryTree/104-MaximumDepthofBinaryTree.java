@@ -1,21 +1,19 @@
-// Last updated: 9/24/2026, 8:14:33 PM
-1class Solution {
-2    private int diameter;
-3
-4    public int diameterOfBinaryTree(TreeNode root) {
-5        diameter = 0;
-6        solve(root);
-7        return diameter;
+// Last updated: 9/24/2026, 8:37:39 PM
+1public class Solution {
+2
+3    int sum = 0;
+4    
+5    public TreeNode convertBST(TreeNode root) {
+6        convert(root);
+7        return root;
 8    }
-9
-10    private int solve(TreeNode root) {
-11        if (root == null) return 0;
-12
-13        int leftHeight = solve(root.left);
-14        int rightHeight = solve(root.right);
-15
-16        diameter = Math.max(diameter, leftHeight + rightHeight);
-17
-18        return Math.max(leftHeight, rightHeight) + 1;
-19    }
-20}
+9    
+10    public void convert(TreeNode cur) {
+11        if (cur == null) return;
+12        convert(cur.right);
+13        cur.val += sum;
+14        sum = cur.val;
+15        convert(cur.left);
+16    }
+17    
+18}
