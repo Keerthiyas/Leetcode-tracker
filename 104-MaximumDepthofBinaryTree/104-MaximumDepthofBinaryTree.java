@@ -1,4 +1,4 @@
-// Last updated: 9/24/2026, 8:55:17 PM
+// Last updated: 9/24/2026, 8:56:23 PM
 1/*
 2// Definition for a Node.
 3class Node {
@@ -8,7 +8,7 @@
 7    public Node next;
 8
 9    public Node() {}
-10    
+10
 11    public Node(int _val) {
 12        val = _val;
 13    }
@@ -24,21 +24,35 @@
 23
 24class Solution {
 25    public Node connect(Node root) {
-26        if(root == null) return null;
-27        Queue<Node> q = new LinkedList<>();
-28        q.offer(root);
-29        while(!q.isEmpty()) {
-30            Node rightNode = null;
-31            for(int i = q.size(); i > 0; i--) {
-32                Node cur = q.poll();
-33                cur.next = rightNode;
-34                rightNode = cur;
-35                if(cur.right != null) {
-36                    q.offer(cur.right);
-37                    q.offer(cur.left);
-38                }
-39            }
-40        }
-41        return root;        
-42    }
-43}
+26        Node curr = root;
+27
+28        while (curr != null) {
+29            // Dummy node helps build the next level
+30            Node dummy = new Node(0);
+31            Node tail = dummy;
+32
+33            // Traverse current level using next pointers
+34            while (curr != null) {
+35
+36                // Add left child to next level
+37                if (curr.left != null) {
+38                    tail.next = curr.left;
+39                    tail = tail.next;
+40                }
+41
+42                // Add right child to next level
+43                if (curr.right != null) {
+44                    tail.next = curr.right;
+45                    tail = tail.next;
+46                }
+47
+48                curr = curr.next;
+49            }
+50
+51            // Move to the first node of the next level
+52            curr = dummy.next;
+53        }
+54
+55        return root;
+56    }
+57}
