@@ -1,33 +1,36 @@
-// Last updated: 9/24/2026, 8:38:46 PM
+// Last updated: 9/24/2026, 8:40:19 PM
 1class Solution {
-2    public TreeNode buildTree(int[] preorder, int[] inorder) {
-3        Deque<Integer> preorderQueue = new ArrayDeque<>();
-4        for (int val : preorder) {
-5            preorderQueue.offer(val);
-6        }
-7
-8        return build(preorderQueue, inorder);        
-9    }
-10
-11    private TreeNode build(Deque<Integer> preorder, int[] inorder) {
-12        if (inorder.length > 0) {
-13            int idx = indexOf(inorder, preorder.poll());
-14            TreeNode root = new TreeNode(inorder[idx]);
-15
-16            root.left = build(preorder, Arrays.copyOfRange(inorder, 0, idx));
-17            root.right = build(preorder, Arrays.copyOfRange(inorder, idx + 1, inorder.length));
-18
-19            return root;
-20        }
-21        return null;
-22    }
-23
-24    private int indexOf(int[] arr, int value) {
-25        for (int i = 0; i < arr.length; i++) {
-26            if (arr[i] == value) {
-27                return i;
-28            }
-29        }
-30        return -1; // shouldn't happen with valid input
-31    }    
-32}
+2    public TreeNode buildTree(int[] inorder, int[] postorder) {
+3        // Call the recursive function with full arrays and return the result
+4        return buildTree(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
+5    }
+6    
+7    private TreeNode buildTree(int[] inorder, int inStart, int inEnd, int[] postorder, int postStart, int postEnd) {
+8        // Base case
+9        if (inStart > inEnd || postStart > postEnd) {
+10            return null;
+11        }
+12        
+13        // Find the root node from the last element of postorder traversal
+14        int rootVal = postorder[postEnd];
+15        TreeNode root = new TreeNode(rootVal);
+16        
+17        // Find the index of the root node in inorder traversal
+18        int rootIndex = 0;
+19        for (int i = inStart; i <= inEnd; i++) {
+20            if (inorder[i] == rootVal) {
+21                rootIndex = i;
+22                break;
+23            }
+24        }
+25        
+26        // Recursively build the left and right subtrees
+27        int leftSize = rootIndex - inStart;
+28        int rightSize = inEnd - rootIndex;
+29        root.left = buildTree(inorder, inStart, rootIndex - 1, postorder, postStart, postStart + leftSize - 1);
+30        root.right = buildTree(inorder, rootIndex + 1, inEnd, postorder, postEnd - rightSize, postEnd - 1);
+31        
+32        return root;
+33    }
+34}
+35
