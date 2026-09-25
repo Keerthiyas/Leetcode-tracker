@@ -1,44 +1,32 @@
-// Last updated: 9/24/2026, 9:10:55 PM
-1
-2class Solution {
-3    public TreeNode deleteNode(TreeNode root, int key) {
-4        //search
-5        if(root == null ) {
-6            return null;
-7        }
-8        if(root.val<key){
-9            root.right = deleteNode(root.right,key);
+// Last updated: 9/25/2026, 8:56:35 AM
+1class Solution {
+2    public void solve(int[] nums, int index, List<Integer> output, Set<List<Integer>> ans) {
+3        // base case: if we have reached the end of the input array
+4        if (index >= nums.length) {
+5            // only add the output if it has more than one element
+6            if (output.size() > 1) {
+7                ans.add(new ArrayList<>(output));
+8            }
+9            return;
 10        }
-11        else if(root.val>key) {
-12            root.left = deleteNode(root.left,key);
-13        }
-14        else{
-15            //case 1: leaf node
-16            if(root.left == null && root.right == null ) {
-17                return null;
-18            }
-19            //case 2 : one child
-20            if(root.left ==  null){
-21                return root.right;
-22            }
-23            else if(root.right ==  null ) {
-24                return root.left;
-25            }
-26            //case 3 : two children
-27            TreeNode IS = findInOrderSuccessor(root.right);
-28            root.val = IS.val;
-29
-30            
-31            root.right = deleteNode(root.right,IS.val);
-32        }
-33        return root;
-34
-35    }
-36    private TreeNode findInOrderSuccessor(TreeNode root){
-37        while(root.left != null){
-38            root = root.left;
-39        }
-40        return root;
-41    }
-42}
-43
+11        
+12        // if the output is empty or the current element is greater than or equal to the last element in the output
+13        if (output.isEmpty() || nums[index] >= output.get(output.size() - 1)) {
+14            // add the current element to the output and recursively call solve
+15            output.add(nums[index]);
+16            solve(nums, index+1, output, ans);
+17            // remove the last element from the output before returning
+18            output.remove(output.size() - 1);
+19        }
+20        
+21        // recursively call solve without adding the current element to the output
+22        solve(nums, index+1, output, ans);
+23    }
+24    
+25    public List<List<Integer>> findSubsequences(int[] nums) {
+26        // use a set to store the unique sub sequences
+27        Set<List<Integer>> ans = new HashSet<>();
+28        solve(nums, 0, new ArrayList<>(), ans);
+29        return new ArrayList<>(ans);
+30    }
+31}
